@@ -57,7 +57,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EF\Models\Manager.cs" />
     <Compile Include="EF\TaskManagementContext.cs" />
+    <Compile Include="Forms\AddTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddTask.Designer.cs">
+      <DependentUpon>AddTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DeleteTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DeleteTask.Designer.cs">
+      <DependentUpon>DeleteTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EmployeeView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,8 +84,7 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="EF\Models\Task.cs" />
-    <Compile Include="EF\Models\User.cs" />
-    <Compile Include="EF\Models\UserType.cs" />
+    <Compile Include="EF\Models\Employee.cs" />
     <Compile Include="Forms\ManagerView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,9 +99,27 @@
     <Compile Include="Migrations\202407172105594_AddTaskFields.Designer.cs">
       <DependentUpon>202407172105594_AddTaskFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202407181157446_AddUserToTask.cs" />
+    <Compile Include="Migrations\202407181157446_AddUserToTask.Designer.cs">
+      <DependentUpon>202407181157446_AddUserToTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407181257275_AddManagerRemoveUserType.cs" />
+    <Compile Include="Migrations\202407181257275_AddManagerRemoveUserType.Designer.cs">
+      <DependentUpon>202407181257275_AddManagerRemoveUserType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407181518083_AddNecessaryFieldsEmployee.cs" />
+    <Compile Include="Migrations\202407181518083_AddNecessaryFieldsEmployee.Designer.cs">
+      <DependentUpon>202407181518083_AddNecessaryFieldsEmployee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AddTask.resx">
+      <DependentUpon>AddTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DeleteTask.resx">
+      <DependentUpon>DeleteTask.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmployeeView.resx">
       <DependentUpon>EmployeeView.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +131,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202407172105594_AddTaskFields.resx">
       <DependentUpon>202407172105594_AddTaskFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407181157446_AddUserToTask.resx">
+      <DependentUpon>202407181157446_AddUserToTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407181257275_AddManagerRemoveUserType.resx">
+      <DependentUpon>202407181257275_AddManagerRemoveUserType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407181518083_AddNecessaryFieldsEmployee.resx">
+      <DependentUpon>202407181518083_AddNecessaryFieldsEmployee.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

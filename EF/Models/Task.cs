@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManagement.Models
+namespace TaskManagement.EF.Models
 {
     public class Task
     {
@@ -17,6 +17,6 @@ namespace TaskManagement.Models
         public int Priority { get; set; }
         public string Description { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
-        public bool IsShared { get; set; }
+        public List<Employee> AssignedEmployees { get; set; }
     }
 }

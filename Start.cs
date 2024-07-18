@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskManagement.EF;
-using TaskManagement.Models;
+using TaskManagement.EF.Models;
 
 namespace TaskManagement
 {
@@ -27,24 +27,32 @@ namespace TaskManagement
         {
             using (var db = new TaskManagementContext())
             {
-                db.UserSet.RemoveRange(db.UserSet.Select(s => s));
-                db.UserTypeSet.RemoveRange(db.UserTypeSet.Select(s => s));
+                db.EmployeeSet.RemoveRange(db.EmployeeSet.Select(s => s));
+                db.ManagerSet.RemoveRange(db.ManagerSet.Select(s => s));
                 db.TaskSet.RemoveRange(db.TaskSet.Select(s => s));
 
-                UserType employee = new Models.UserType { ID = 1, Name = "Employee" };
-                UserType manager = new Models.UserType { ID = 2, Name = "Manager" };
+                db.SaveChanges();
 
-                db.UserTypeSet.Add(employee);
-                db.UserTypeSet.Add(manager);
+                Employee Employee_1 = new Employee { Name = "Employee_1" };
+                Employee Employee_2 = new Employee { Name = "Employee_2" };
+                Manager Manager = new Manager { Name = "Manager", Employees = new List<Employee>() {Employee_1, Employee_2} };
 
-                db.UserSet.Add(new Models.User { Name = "Employee_1", UserType = employee });
-                db.UserSet.Add(new Models.User { Name = "Employee_2", UserType = employee });
-                db.UserSet.Add(new Models.User { Name = "Manager", UserType = manager });
-
-                db.TaskSet.Add(new Models.Task { Priority = 1, Title = "Employee 1 task", Description = "bla bla bla",  });
-                db.TaskSet.Add(new Models.Task { Priority = 2, Title = "Code optimization", Description = "bla bla bla" });
+                db.EmployeeSet.Add(Employee_1);
+                db.EmployeeSet.Add(Employee_2);
+                db.ManagerSet.Add(Manager);
 
                 db.SaveChanges();
+
+                db.TaskSet.Add(new EF.Models.Task { Priority = 2, Title = "Employee 1 task", Description = "bla bla bla", AssignedEmployees = db.EmployeeSet.Where(w => w.Name == "Employee_1").ToList() });
+                db.TaskSet.Add(new EF.Models.Task { Priority = 2, Title = "Employee 2 task", Description = "bla bla bla", AssignedEmployees = db.EmployeeSet.Where(w => w.Name == "Employee_2").ToList() });
+                db.TaskSet.Add(new EF.Models.Task { Priority = 1, Title = "Manager task", Description = "bla bla bla", AssignedEmployees = db.EmployeeSet.Where(w => w.Name == "Manager").ToList() });
+                db.TaskSet.Add(new EF.Models.Task { Priority = 1, Title = "Global task", Description = "bla bla bla", AssignedEmployees = db.EmployeeSet.ToList() });
+
+                db.SaveChanges();
+
+                var x = db.TaskSet.ToList();
+
+                int z = 0;
             }
         }
     }

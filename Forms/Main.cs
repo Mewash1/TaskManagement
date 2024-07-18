@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskManagement.EF;
+using TaskManagement.EF.Models;
 using TaskManagement.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TaskManagement
 {
@@ -21,23 +23,26 @@ namespace TaskManagement
 
         private void Main_Load(object sender, EventArgs e)
         {
-            int employeeType = 1;
-            int managerType = 2;
             using (var db = new TaskManagementContext())
             {
-                cbEmployees.DataSource = db.UserSet.Where(w => w.UserType.ID == employeeType).Select(s => s.Name).ToList();
-                cbManagers.DataSource = db.UserSet.Where(w => w.UserType.ID == managerType).Select(s => s.Name).ToList();
+                cbEmployees.DataSource = db.EmployeeSet.Select(s => new ComboboxItem()
+                {
+                    Value = s.ID,
+                    Text = s.Name,
+                }).ToList();
             }
         }
 
         private void btnEmployeeView_Click(object sender, EventArgs e)
         {
-            Models.User chosenUser;
-            string chosenUserName = cbEmployees.Text;
+            Employee chosenUser;
+            int chosenUserID = (cbEmployees.SelectedItem as ComboboxItem).Value;
 
             using (var db = new TaskManagementContext())
             {
-                chosenUser = db.UserSet.Where(w => w.Name == chosenUserName).FirstOrDefault();
+                chosenUser = db.EmployeeSet
+                    .Where(w => w.ID == chosenUserID)
+                    .FirstOrDefault();
             }
 
             using (EmployeeView employeeView = new EmployeeView(chosenUser))
@@ -46,9 +51,15 @@ namespace TaskManagement
             }
         }
 
-        private void btnManagerView_Click(object sender, EventArgs e)
+        private class ComboboxItem
         {
+            public string Text { get; set; }
+            public int Value { get; set; }
 
+            public override string ToString()
+            {
+                return Text;
+            }
         }
     }
 }
